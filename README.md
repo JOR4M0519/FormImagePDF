@@ -10,14 +10,13 @@ Antes de ejecutar el proyecto, asegúrate de tener instalados los siguientes com
 
 ### **Software Requerido**
 1. **Python 3.8+**
-2. **Git** (opcional, para gestionar el repositorio)
 
 ### **Bibliotecas de Python**
 Ejecuta el siguiente comando para instalar las dependencias necesarias:
-
 ```bash
 pip install -r requirements.txt
 ```
+
 ### **Estructura del Proyecto**
 
 ```bash
