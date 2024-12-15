@@ -64,6 +64,15 @@ pip install -r requirements.txt
 
 ### 3. Inicia el Servidor Flask
 
+## Forma 1
+Ejecuta el archivo start.bat
+
+Esto ejecutará la aplicación y podrás acceder a ella desde tu navegador en la siguiente dirección:
+```bash
+http://localhost:5000
+```
+
+## Forma 2
 Ejecuta el archivo principal del proyecto (`app.py`) para iniciar el servidor Flask:
 
 ```bash

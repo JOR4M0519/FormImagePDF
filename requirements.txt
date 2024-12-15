@@ -4,3 +4,4 @@ PyPDF2
 Pillow
 reportlab
 opencv-python
+waitress
