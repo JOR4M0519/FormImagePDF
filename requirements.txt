@@ -1,0 +1,6 @@
+Flask
+Werkzeug
+PyPDF2
+Pillow
+reportlab
+opencv-python
