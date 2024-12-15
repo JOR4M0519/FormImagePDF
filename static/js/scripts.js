@@ -47,6 +47,7 @@ function generatePDF() {
         .then((data) => {
             if (data.success) {
                 showAlert(data.message, "success");
+                document.getElementById("printPDF").disabled = false
             } else {
                 showAlert(data.message, "danger");
             }
@@ -58,15 +59,43 @@ function generatePDF() {
 }
 
 
+function printGeneratedPDF() {
+    // Obtener el nombre del PDF generado
+    const pdfName = document.getElementById("result_name").value.trim();
+
+    if (!pdfName) {
+        alert("Por favor, ingresa un nombre válido para el archivo PDF.");
+        return;
+    }
+
+    const pdfPath = `/PDF/${pdfName}.pdf`; // Ruta del PDF generado
+
+    // Abre el PDF en una nueva ventana/pestaña
+    const printWindow = window.open(pdfPath, "_blank");
+
+    if (printWindow) {
+        // Esperar a que el PDF cargue y luego imprimirlo automáticamente
+        printWindow.onload = () => {
+            printWindow.print();
+        };
+    } else {
+        alert("No se pudo abrir el PDF. Verifica la ruta o los permisos.");
+    }
+}
+
+
+
+
 let videoStream; // Variable global para el stream de la cámara
 
 // Inicializar la cámara cuando el modal se abre
 function startCamera() {
     const result_name = document.getElementById("result_name").value;
-    if(result_name!=""){
-    const video = document.getElementById("camera-stream");
+    console.log(result_name != "" , result_name.includes("Matricula"))
+    if(result_name != "" && result_name.includes("Matricula")){
+        const video = document.getElementById("camera-stream");
 
-    navigator.mediaDevices
+        navigator.mediaDevices
         .getUserMedia({ video: true })
         .then((stream) => {
             videoStream = stream;
@@ -80,7 +109,7 @@ function startCamera() {
         const modalInstance = bootstrap.Modal.getInstance(modalElement);
         stopCamera()
         modalInstance.hide();
-        showAlert("Digite el nombre para guardar 'Nombre del Archivo Resultante' ","danger")
+        showAlert("Digite el nombre correcto para guardar 'Nombre del Archivo Resultante' ","danger")
     }
 }
 

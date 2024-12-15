@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify
+from flask import Flask, render_template, request, jsonify, send_from_directory
 from werkzeug.utils import secure_filename
 import cv2
 from PIL import Image
@@ -45,14 +45,25 @@ def capture_photo(photo_path):
 def index():
     return render_template("index.html")
 
+
+@app.route("/PDF/<path:filename>")
+def serve_pdf(filename):
+    """Permitir que los PDFs generados sean accesibles desde el navegador."""
+    return send_from_directory(app.config["PDF_FOLDER"], filename)
+
+
 @app.route("/upload_pdf", methods=["POST"])
 def upload_pdf():
     file = request.files["pdf_file"]
     if file:
         filename = secure_filename(file.filename)
         pdf_path = os.path.join(app.config["UPLOAD_FOLDER"], filename)
-        file.save(pdf_path)
-        return jsonify({"success": True, "message": "PDF subido correctamente.", "path": pdf_path})
+        try:
+            file.save(pdf_path)
+            return jsonify({"success": True, "message": "PDF subido correctamente.", "path": pdf_path})
+        except Exception as e:
+            return jsonify({"success": False, "message": "El archivo no se subó correctamente.", "path": pdf_path})
+        
     return jsonify({"success": False, "message": "Error al subir el PDF."})
 
 @app.route("/capture_photo", methods=["POST"])
